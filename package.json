@@ -1,0 +1,34 @@
+{
+  "name": "stackswap",
+  "version": "1.0.0",
+  "description": "Assembler gas-optimized evm swap contract for stablecoins.",
+  "author": "evmoverflow",
+  "main": "build.js",
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "keccak256": "^1.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/evmoverflow/StackSwap#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evmoverflow/StackSwap"
+  },
+  "bugs": {
+    "url": "https://github.com/evmoverflow/StackSwap/issues"
+  },
+  "keywords": [
+    "asm",
+    "assembler",
+    "evm",
+    "eth",
+    "ethereum",
+    "crypto",
+    "contract",
+    "stablecoin",
+    "swap",
+    "exchanger"
+  ]
+}
