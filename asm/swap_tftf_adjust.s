@@ -1,6 +1,9 @@
 # :swap_tftf_adjust
 jumpdest
 
+# push 1e12
+push5 0xe8d4a51000
+
 # _amount = calldataload(0x4)
 push1 0x4
 calldataload
@@ -26,7 +29,6 @@ msize
 mstore
 
 # mul/div(_amount, 1e12)
-push5 0xe8d4a51000
 $op
 
 # _res1 = call(gas(), $token0, 0, 0x1c, 0x64, 0, 0)
@@ -57,9 +59,9 @@ push1 %($id * 5)
 shr
 and
 mul
-dup2
+dup3
 div
-dup2
+dup3
 sub
 push1 0x44
 mstore

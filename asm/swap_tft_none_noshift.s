@@ -46,9 +46,9 @@ push1 0x1f
 selfbalance
 and
 mul
-dup2
+dup3
 div
-dup2
+dup3
 sub
 push1 0x24
 mstore

@@ -8,5 +8,5 @@ msize
 codecopy
 
 # return(0, _size)
-calldatasize
+push1 0
 return

@@ -53,9 +53,9 @@ push1 %($id * 5)
 shr
 and
 mul
-dup2
+dup3
 div
-dup2
+dup3
 sub
 push1 0x44
 mstore

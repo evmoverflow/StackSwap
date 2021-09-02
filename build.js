@@ -1,6 +1,6 @@
 'use strict';
 
-const owner = '0x5B38Da6a701c568545dCfcB03FcB875f56beddC4';
+const owner = '0xe47f7f44e7D4B25620B6E467Aee43de2CaA0b8Cd';
 
 const addresses = require('./const/addresses');
 const { assemble } = require('./lib/evm');
@@ -33,7 +33,7 @@ const swap_tftf_adjust = read('./asm/swap_tftf_adjust.s');
 const swap_tft_mul = setVars(swap_tft_adjust, { op: 'mul' });
 const swap_tftf_mul = setVars(swap_tftf_adjust, { op: 'mul' });
 const swap_tft_div = setVars(swap_tft_adjust, { op: 'div' });
-const swap_tftf_div = setVars(swap_tftf_adjust, { op: 'div' });
+//const swap_tftf_div = setVars(swap_tftf_adjust, { op: 'div' });
 
 const swapT2C = setVars(swap_tft_none_noshift, { token0: addresses['USDT'], token1: addresses['USDC'] });
 const swapC2T = setVars(swap_tft_none, { id: 1, token0: addresses['USDC'], token1: addresses['USDT'] });
@@ -47,8 +47,8 @@ const swapC2D = setVars(swap_tftf_mul, { id: 7, token0: addresses['USDC'], token
 
 const swapD2C = setVars(swap_tft_div, { id: 8, token0: addresses['DAI'], token1: addresses['USDC'] });
 const swapB2C = setVars(swap_tft_div, { id: 9, token0: addresses['BUSD'], token1: addresses['USDC'] });
-const swapD2T = setVars(swap_tftf_div, { id: 10, token0: addresses['DAI'], token1: addresses['USDT'] });
-const swapB2T = setVars(swap_tftf_div, { id: 11, token0: addresses['BUSD'], token1: addresses['USDT'] });
+const swapD2T = setVars(swap_tft_div, { id: 10, token0: addresses['DAI'], token1: addresses['USDT'] });
+const swapB2T = setVars(swap_tft_div, { id: 11, token0: addresses['BUSD'], token1: addresses['USDT'] });
 
 const getFee = read('./asm/getFee.s');
 const getReturn = setVars(read('./asm/getReturn.s'), { padding: 'invalid\r\n'.repeat(34) });
@@ -117,6 +117,10 @@ for(const [ offset, code ] of jumpTable) {
   }
 }
 
+const suffix = Buffer.from('StackSwap v1').toString('hex');
+const remain = 0x2000 - (appBin.length / 2) - (suffix.length / 2);
+appBin += 'fe'.repeat(remain) + suffix;
+
 }
 catch(e) {
   return console.log('fail.', e);
@@ -124,25 +128,6 @@ catch(e) {
 //console.log(appAsm);
 write('./dist/debug.s', appAsm);
 console.log('- debug.s wrote!');
-
-// ---
-// Remix debug contract
-
-const debugLines = appBin.match(/.{1,250}/g).map((k, i) => { return `verbatim_0i_0o(hex'${k}')`; }).join('\n');
-const debugYul = `object 'StackSwap' {
-  code {
-    datacopy(0, dataoffset('app'), datasize('app'))
-    return (0, datasize('app'))
-  }
-  object 'app' {
-    code {
-${debugLines}
-    }
-  }
-}
-`;
-write('./dist/debug.sol', debugYul);
-console.log('- debug.sol wrote!');
 
 // ---
 // Contract ABI
@@ -177,27 +162,6 @@ write('./dist/abi.json', JSON.stringify(abiTable, null, 2));
 console.log('- abi.json wrote!');
 
 // ---
-// Remix ABI debug contract
-
-const debugABILines = Object.entries(fnTable).map(([name, [, [modifier, inputs = '', outputs = '']]]) => {
-  const ins = inputs.split(',').map(k => k.includes(':') ? k.split(':').reverse().join(' ') : k).join(', ');
-  const outs = outputs.split(',').map(k => k.includes(':') ? k.split(':').reverse().join(' ') : k).join(', ');
-  const mod = (modifier === 'nonpayable' ? '' : ` ${modifier}`);
-  const returns = outs.length ? ` returns (${outs})` : '';
-  return `function ${fnNames[name]}(${ins}) external${mod}${returns} {}`;
-}).join('\n');
-
-const debugABI = `pragma solidity =0.8.7;
-
-contract StackSwapABI {
-${debugABILines}
-}
-`;
-console.log(debugABI);
-write('./dist/debugABI.sol', debugABI);
-console.log('- debugABI.sol wrote!');
-
-// ---
 // Balance needed
 
 const fees = [
@@ -221,8 +185,49 @@ console.log('- balance.txt wrote!');
 
 // ---
 // Deploy bytecode
-
+/*
 const deployer = assemble(0, setVars(read('./asm/deployer.s'), { offset: 10, size: (appBin.length / 2) }));
 const byteCode = deployer + appBin;
 write('./dist/bytecode.txt', byteCode);
 console.log('- bytecode.txt wrote!');
+*/
+// ---
+// Remix debug contract
+
+//const deployerLines = deployer.match(/.{1,250}/g).map((k, i) => { return `verbatim_0i_0o(hex'${k}')`; }).join('\n');
+const debugLines = appBin.match(/.{1,250}/g).map((k, i) => { return `verbatim_0i_0o(hex'${k}')`; }).join('\n');
+const debugYul = `object 'StackSwap' {
+  code {
+    datacopy(0, dataoffset('app'), datasize('app'))
+    return (0, datasize('app'))
+  }
+  object 'app' {
+    code {
+${debugLines}
+    }
+  }
+}
+`;
+write('./dist/debug.sol', debugYul);
+console.log('- debug.sol wrote!');
+
+// ---
+// Remix ABI debug contract
+
+const debugABILines = Object.entries(fnTable).map(([name, [, [modifier, inputs = '', outputs = '']]]) => {
+  const ins = inputs.split(',').map(k => k.includes(':') ? k.split(':').reverse().join(' ') : k).join(', ');
+  const outs = outputs.split(',').map(k => k.includes(':') ? k.split(':').reverse().join(' ') : k).join(', ');
+  const mod = (modifier === 'nonpayable' ? '' : ` ${modifier}`);
+  const returns = outs.length ? ` returns (${outs})` : '';
+  return `function ${fnNames[name]}(${ins}) external${mod}${returns} {}`;
+}).join('\n');
+
+const debugABI = `pragma solidity =0.8.7;
+
+contract StackSwapABI {
+${debugABILines}
+}
+`;
+console.log(debugABI);
+write('./dist/debugABI.sol', debugABI);
+console.log('- debugABI.sol wrote!');
