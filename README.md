@@ -6,7 +6,7 @@ _StackSwap is a **highly** optimized contract for ethereum stablecoins swap._
 
 StackSwap: [0xeeeeaeCCCEEEacEEcEEA7719Ece73B779a121f6C](https://etherscan.io/address/0xeeeeaeccceeeaceeceea7719ece73b779a121f6c)
 
-## Swap
+## Methods
 
 | id | name | function | returns | gas cost | description |
 | --- | --- | --- | --- | --- | --- |
@@ -23,7 +23,7 @@ StackSwap: [0xeeeeaeCCCEEEacEEcEEA7719Ece73B779a121f6C](https://etherscan.io/add
 | 10 | swapD2T | swapD2T_01512(uint256 amountIn) | - | 83,697 | Swaps from DAI to USDT |
 | 11 | swapB2T | swapB2T_02283(uint256 amountIn) | - | 101,699 | Swaps from BUSD to USDT |
 
-## Utils
+## Views
 
 | name | function | returns | description |
 | --- | --- | --- | --- |
