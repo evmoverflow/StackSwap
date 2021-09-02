@@ -31,4 +31,4 @@ StackSwap: [0xeeeeaeCCCEEEacEEcEEA7719Ece73B779a121f6C](https://etherscan.io/add
 | getReturn | getReturn_00958(uint256 id, uint256 amountIn) | uint256 amountOut | Get expected return amount for asked swap id |
 
 ## License
-See license at [LICENSE](../blob/master/LICENSE)
+See license at [LICENSE](https://github.com/evmoverflow/StackSwap/blob/main/LICENSE)
