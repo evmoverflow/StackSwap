@@ -4,7 +4,7 @@ _StackSwap is a **highly** optimized contract for ethereum stablecoins swap._
 
 ## Address
 
-StackSwap: [0xeeeeaeccceeeaceeceea7719ece73b779a121f6c](https://etherscan.io/address/0xeeeeaeccceeeaceeceea7719ece73b779a121f6c)
+StackSwap: [0xeeeeaeCCCEEEacEEcEEA7719Ece73B779a121f6C](https://etherscan.io/address/0xeeeeaeccceeeaceeceea7719ece73b779a121f6c)
 
 ## Swap
 
