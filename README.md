@@ -1,4 +1,4 @@
-# StackSwap
+# <img src="https://stackswap.io/img/stackswap.svg" width="36" style="vertical-align: middle" /> StackSwap
 
 _StackSwap is a **highly** optimized contract for ethereum stablecoins swap._
 
