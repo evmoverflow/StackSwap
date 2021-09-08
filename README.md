@@ -7,6 +7,27 @@ _StackSwap is a **highly** optimized contract for ethereum stablecoins swap._
 - Website: https://stackswap.io
 - Contract: [0xeeeeaeCCCEEEacEEcEEA7719Ece73B779a121f6C](https://etherscan.io/address/0xeeeeaeccceeeaceeceea7719ece73b779a121f6c)
 
+## Interface
+
+```js
+interface IStackSwap {
+  function swapT2C_10357(uint256 amountIn) external;
+  function swapC2T_01800(uint256 amountIn) external;
+  function swapD2B_00599(uint256 amountIn) external;
+  function swapB2D_02258(uint256 amountIn) external;
+  function swapT2B_14208(uint256 amountIn) external;
+  function swapC2B_00745(uint256 amountIn) external;
+  function swapT2D_00978(uint256 amountIn) external;
+  function swapC2D_12243(uint256 amountIn) external;
+  function swapD2C_01083(uint256 amountIn) external;
+  function swapB2C_04080(uint256 amountIn) external;
+  function swapD2T_01512(uint256 amountIn) external;
+  function swapB2T_02283(uint256 amountIn) external;
+  function getFee_00201(uint256 id) external view returns (uint256 fee);
+  function getReturn_00958(uint256 id, uint256 amountIn) external view returns (uint256 amountOut);
+}
+```
+
 ## Methods
 
 | id | name | function | returns | gas cost | description |
